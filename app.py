@@ -19,7 +19,7 @@ khqr = KHQR(api_token)
 current_transactions = {}
 
 # Data Store API configuration
-DATA_STORE_URL = 'https://mengtopup.shop'  # Change this to your data store server URL
+DATA_STORE_URL = 'https://orr-nu.vercel.app'  # Change this to your data store server URL
 
 # Admin authentication decorator
 def admin_required(f):
@@ -34,7 +34,7 @@ def admin_required(f):
 # Load transactions from data store API
 def load_transactions():
     try:
-        response = requests.get(f'{DATA_STORE_URL}/transactions?store=mengtopup', timeout=5)
+        response = requests.get(f'{DATA_STORE_URL}/transactions?store=orr-nu', timeout=5)
         response.raise_for_status()
         return response.json()
     except requests.RequestException:
@@ -43,7 +43,7 @@ def load_transactions():
 # Save transactions to data store API
 def save_transactions(transactions):
     try:
-        response = requests.post(f'{DATA_STORE_URL}/transactions?store=mengtopup', 
+        response = requests.post(f'{DATA_STORE_URL}/transactions?store=orr-nu', 
                                json=transactions, timeout=5)
         response.raise_for_status()
         return response.json().get('success', False)
@@ -53,7 +53,7 @@ def save_transactions(transactions):
 # Add a single transaction to data store
 def add_transaction_to_store(transaction_data, status):
     try:
-        response = requests.post(f'{DATA_STORE_URL}/transactions?store=mengtopup/add', 
+        response = requests.post(f'{DATA_STORE_URL}/transactions?store=orr-nu/add', 
                                json={
                                    'status': status,
                                    'transaction': transaction_data
@@ -65,13 +65,13 @@ def add_transaction_to_store(transaction_data, status):
 # Load packages from data store API
 def load_packages():
     try:
-        response = requests.get(f'{DATA_STORE_URL}/packages?store=mengtopup', timeout=5)
+        response = requests.get(f'{DATA_STORE_URL}/packages?store=orr-nu', timeout=5)
         response.raise_for_status()
         return response.json()
     except requests.RequestException:
         # Return default packages if API is unavailable
         return {
-            "ml": [], "ff": [], "pubg": [], "hok": [], "bloodstrike": [], "mcgg": [], "mlph": [],
+            "ml": [11 : 0.01], "ff": [], "pubg": [], "hok": [], "bloodstrike": [], "mcgg": [], "mlph": [],
             "ml_special_offers": [], "ff_special_offers": [], "pubg_special_offers": [],
             "hok_special_offers": [], "bloodstrike_special_offers": [], "mcgg_special_offers": [], "mlph_special_offers": []
         }
